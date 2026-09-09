@@ -79,6 +79,25 @@ class Point:
             tag = row.get ("tag"),
         )
 
+    @classmethod
+    def from_dict(cls, d):
+        return cls(
+            d["id"],
+            d["lon"],
+            d["lat"],
+            d.get("name"),
+            d.get("tag")
+        )
+
+    def as_dict(self):
+        return {
+            "id" : self.id,
+            "geometry" : [self.lon, self.lat],
+            "name" : self.name,
+            "tag" : self.tag,
+            "bbox" : list(self.geometry.bounds)
+        }
+
     def is_poi (self):
         return (self.tag or "").lower() == "poi"
 
