@@ -18,3 +18,8 @@ p = Point.from_dict(test_dict)
 print(p.lon)
 
 print(p.as_dict())
+
+# Testing the inherited behavior.
+
+p = Point("A", 121.0, 14.6)
+print(p.bbox())
