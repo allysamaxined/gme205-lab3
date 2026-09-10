@@ -1,6 +1,7 @@
 import math
 # For Programming Exercise 3, I'll be importing Shapely here.
 from shapely.geometry import Point as ShapelyPoint
+from shapely.geometry import Polygon
 
 # Creating the SpaitialObject here.
 
@@ -17,6 +18,7 @@ class SpatialObject:
         return self.geometry.intersects(other.geometry)
 
 # Turning Point to a class that inherits from SpatialObject.
+
 class Point(SpatialObject):
     def __init__(self, id, lon, lat, name=None, tag=None):
 
@@ -116,6 +118,21 @@ class Point(SpatialObject):
 
     def is_poi (self):
         return (self.tag or "").lower() == "poi"
+
+# Adding the Parcel class.
+class Parcel(SpatialObject):
+    def __init__(self, parcel_id, geometry, attributes: dict):
+        super().__init__(geometry)
+        self.parcel_id = parcel_id
+        self.attributes = attributes
+
+# Implementing Parcel.as_dict()
+    def as_dict(self):
+        return {
+            "parcel_id" : self.parcel_id,
+            "bbox" : list(self.bbox()),
+            "attributes" : self.attributes
+        }
 
 # ------------------------------------------------------------------
 # Creating the PointSet class to store multiple Point objects in a list.
