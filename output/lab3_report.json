@@ -1,0 +1,35 @@
+{
+    "point": {
+        "id": "IN",
+        "geometry": [
+            10.0,
+            5.0
+        ],
+        "name": "Inside Point",
+        "tag": "POI",
+        "bbox": [
+            10.0,
+            5.0,
+            10.0,
+            5.0
+        ]
+    },
+    "parcel": {
+        "parcel_id": 202620920,
+        "bbox": [
+            0.0,
+            0.0,
+            20.0,
+            10.0
+        ],
+        "attributes": {
+            "area": 200.0,
+            "zone": "Commercial",
+            "is_active": true
+        }
+    },
+    "relationships": {
+        "inside_intersects_parcel": true,
+        "outside_intersects_parcel": false
+    }
+}

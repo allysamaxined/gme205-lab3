@@ -1,9 +1,9 @@
 import math
 # For Programming Exercise 3, I'll be importing Shapely here.
 from shapely.geometry import Point as ShapelyPoint
-from shapely.geometry import Polygon
+# from shapely.geometry import Polygon
 
-# Creating the SpaitialObject here.
+# Creating the SpatialObject here.
 
 class SpatialObject:
     """Base abstraction for domain objects that have geometry."""
@@ -113,7 +113,7 @@ class Point(SpatialObject):
             "geometry" : [self.lon, self.lat],
             "name" : self.name,
             "tag" : self.tag,
-            "bbox" : list(self.geometry.bounds)
+            "bbox": list(self.bbox())
         }
 
     def is_poi (self):
@@ -133,46 +133,3 @@ class Parcel(SpatialObject):
             "bbox" : list(self.bbox()),
             "attributes" : self.attributes
         }
-
-# ------------------------------------------------------------------
-# Creating the PointSet class to store multiple Point objects in a list.
-# ------------------------------------------------------------------
-
-class PointSet:
-    def __init__ (self, points):
-        self.points = points # PointSet is now outside of the Point class, and it is a separate class that can store multiple Point objects in a list.
-
-    @classmethod
-    def from_csv (cls, path):
-        import pandas as pd 
-
-        dataframe = pd.read_csv (path)
-        points = []
-
-        for _, row in dataframe.iterrows():
-            try:
-                point = Point.from_row (row)
-                points.append (point)
-
-            except ValueError:
-                continue
-
-        return cls (points)
-
-    def count (self):
-        return len (self.points) # Using the len() function to count the number of Point objects in the PointSet.
-    def bbox (self):
-        min_lon = min (point.lon for point in self.points)
-        min_lat = min (point.lat for point in self.points)
-        max_lon = max (point.lon for point in self.points)
-        max_lat = max (point.lat for point in self.points)
-
-        return (min_lon, min_lat, max_lon, max_lat)
-
-    def filter_by_tag (self, tag):
-        filtered_points = [
-            point for point in self.points
-            if (point.tag or "").lower() == tag.lower()
-        ]
-
-        return PointSet (filtered_points)
